@@ -1,0 +1,38 @@
+# =============================================================================
+# Vibe Workflow Config
+# =============================================================================
+# 워크플로우에서 사용하는 경로, 설정값, 기본값을 관리하는 설정 파일.
+# 프로젝트마다 필요한 값만 오버라이드하면 된다.
+# 이 파일이 없으면 아래 기본값으로 동작한다.
+# =============================================================================
+
+# 산출물 저장 경로
+paths:
+  specs: docs/specs                # Phase 1 스펙 문서 저장 경로
+  plans: docs/plans                # Phase 2 계획 문서 저장 경로
+  workflows: .claude/workflows     # 워크플로우 status + log 저장 디렉토리
+  archive: .claude/workflow-archive # 완료된 워크플로우 아카이브 경로
+
+# 유저 관여 수준
+# high:     모든 곳에서 유저 확인 (처음 익힐 때, 중요한 프로젝트) → ~10회 확인
+# balanced: Phase 전환 + 리뷰 결과 + 커밋 시에만 확인 (기본값) → ~4회 확인
+# low:      Phase 전환 시에만 확인 (신뢰도 높아진 후) → ~2회 확인
+engagement_level: balanced
+
+# 기본값
+defaults:
+  scale: auto                      # 프로젝트 규모 (auto / small / standard / large)
+  checkpoint_interval: phase       # 체크포인트 간격 (task / phase / end)
+  coverage_threshold: 80           # 테스트 커버리지 게이트 (%)
+  review_mode: parallel            # 코드 리뷰 방식 (parallel / single)
+  codex_review: true               # Codex 외부 리뷰 활성화 여부
+
+# 커밋 설정
+git:
+  base_branches: [main, master, develop] # 기본 브랜치 목록
+  message_format: conventional     # 커밋 메시지 형식 (conventional commits)
+
+# TDD 설정
+tdd:
+  framework: auto                  # 테스트 프레임워크 (auto / jest / vitest / pytest / cargo / go)
+  guard_hook: true                 # tdd-guard 훅 활성화 여부
